@@ -10,7 +10,7 @@ namespace TestBackend.Models
         public int Id { get; set; }
         [Required]
         public string Username { get; set; } = null!;
-        [Required]
+        [Required(ErrorMessage = "La contraseña es requerida")]
         public string Password { get; set; } = null!;
         [Required]
         public string Name { get; set; } = null!;

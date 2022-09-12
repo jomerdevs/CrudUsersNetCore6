@@ -6,8 +6,8 @@ namespace TestBackend.DTOs
     public class CreateUserDTO
     {
         [Required]
-        public string Username { get; set; }        
-        [Required]
+        public string Username { get; set; }
+        [Required(ErrorMessage = "La contraseña es requerida")]
         [PasswordPropertyText]
         public string Password { get; set; }
         [Required]

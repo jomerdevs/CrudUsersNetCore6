@@ -77,21 +77,21 @@ namespace TestBackend.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginDTO user)
         {
-
-            var userFound = await context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
-
-            if (userFound == null)
+            try
             {
-                return NotFound(new ResultadoStatusCode
+                var userFound = await context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
+
+                if (userFound == null)
                 {
-                    Success = false,
-                    Data = null,
-                    Message = "El usuario no existe"
-                });
-            }
+                    return NotFound(new ResultadoStatusCode
+                    {
+                        Success = false,
+                        Data = null,
+                        Message = "El usuario no existe"
+                    });
+                }
 
-            if (user.Password != null)
-            {
+
                 user.Password = PasswordHash.HashSha256(user.Password);
 
                 if (user.Password != userFound.Password)
@@ -105,8 +105,11 @@ namespace TestBackend.Controllers
 
                 return Ok(token);
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
 
-            return BadRequest("Debe ingresar una contraseña");
         }
 
         // Método para generar token

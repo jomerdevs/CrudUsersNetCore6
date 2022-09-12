@@ -7,8 +7,8 @@ namespace TestBackend.DTOs
     {
         [Required]
         public string Username { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "La contraseña es requerida")]
         [PasswordPropertyText]
         public string Password { get; set; }
         
